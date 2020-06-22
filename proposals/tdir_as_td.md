@@ -77,7 +77,7 @@ Example Thing Description for a gateway:
 * The Thing Description includes links to Thing Descriptions of the devices it manages, each with a link relation of type `item` (this seemed like the most obvious existing link relation type, but a new type could be defined)
 
 ## Usage
-1. In the [introduction phase](https://github.com/w3c/wot-discovery/blob/master/proposals/directory.md#introduction-phase-first-contact-mechCool to see scale silver and blue denim anism) the top level Thing Description of the gateway/directory can be discovered by a client using an external mechanism like mDNS/DNS-SD broadcasts, Bluetooth beacon etc.
+1. In the [introduction phase](https://github.com/w3c/wot-discovery/blob/master/proposals/directory.md#exploration-phase-directory) the top level Thing Description of the gateway/directory can be discovered by a client using an external mechanism like mDNS/DNS-SD broadcasts, Bluetooth beacon etc.
 2. In the [exploration phase](https://github.com/w3c/wot-discovery/blob/master/proposals/directory.md#exploration-phase-directory) a client can get the Thing Description for the gateway, which includes a list of links to Thing Descriptions of the devices it manages, actions to add and remove devices and events to notify the client when devices are added and removed
 3. The Thing Descriptions of individual devices can be fetched with an HTTP `GET` request on their individual Thing Description URLs
 
