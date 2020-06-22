@@ -18,16 +18,23 @@ Over time the team [realised](https://github.com/mozilla-iot/schemas/issues/35) 
 ### Example
 
 Example Thing Description for a gateway:
-```
+```json
 {
   "title": "WebThings Gateway",
   "@context": "https://iot.mozilla.org/schemas/",
   "@type": "Gateway",
   "properties": {},
   "actions": {
+    "startPairing": {
+      "name": "Start Pairing",
+      "@type": "StartPairingAction"
+    },
     "addThing": {
       "name": "Add Device",
       "@type": "AddThingAction",
+      "input": {
+        "type": "object"
+      }
     },
     "removeThing": {
       "name": "Remove Device",
@@ -72,12 +79,12 @@ Example Thing Description for a gateway:
 
 ### Features
 * The Thing Description has a `@type` of `Gateway` (defined here using a reference to Mozilla's own schema repository, but this could be defined elsewhere)
-* The Thing Description has an `AddThingAction` and `RemoveThingAction` action to add and remove devices respectively (in the case of WebThings Gateway the `AddThingAction` starts a pairing process to discover local devices using wireless protocols like Zigee and Z-Wave as well as discovering devices on the local network via DNS-SD broadcasts)
+* The Thing Description has an `AddThingAction` and `RemoveThingAction` action to add and remove web things respectively. In the case of gateways such as WebThings Gateway, a `StartPairingAction` is also available to initiate a pairing process to discover local devices using wireless protocols like Zigee and Z-Wave as well as discovering devices on the local network via DNS-SD broadcasts.
 * The Thing Description has a `ThingAddedEvent` and `ThingRemovedEvent` to notify clients when devices are added and removed from the gateway
 * The Thing Description includes links to Thing Descriptions of the devices it manages, each with a link relation of type `item` (this seemed like the most obvious existing link relation type, but a new type could be defined)
 
 ## Usage
-1. In the [introduction phase](https://github.com/w3c/wot-discovery/blob/master/proposals/directory.md#exploration-phase-directory) the top level Thing Description of the gateway/directory can be discovered by a client using an external mechanism like mDNS/DNS-SD broadcasts, Bluetooth beacon etc.
+1. In the [introduction phase](https://github.com/w3c/wot-discovery/blob/master/proposals/directory.md#introduction-phase-first-contact-mechanism) the top level Thing Description of the gateway/directory can be discovered by a client using an external mechanism like mDNS/DNS-SD broadcasts, Bluetooth beacon, etc.
 2. In the [exploration phase](https://github.com/w3c/wot-discovery/blob/master/proposals/directory.md#exploration-phase-directory) a client can get the Thing Description for the gateway, which includes a list of links to Thing Descriptions of the devices it manages, actions to add and remove devices and events to notify the client when devices are added and removed
 3. The Thing Descriptions of individual devices can be fetched with an HTTP `GET` request on their individual Thing Description URLs
 
