@@ -22,12 +22,8 @@ Example Thing Description for a gateway:
 {
   "title": "WebThings Gateway",
   "@context": "https://iot.mozilla.org/schemas/",
-  "@type": "Gateway",
+  "@type": "Directory",
   "actions": {
-    "startPairing": {
-      "name": "Start Pairing",
-      "@type": "StartPairingAction"
-    },
     "addThing": {
       "title": "Add Device",
       "@type": "AddThingAction",
