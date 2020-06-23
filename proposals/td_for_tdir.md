@@ -24,9 +24,16 @@ Example Thing Description for a gateway:
   "@context": "https://iot.mozilla.org/schemas/",
   "@type": "Gateway",
   "actions": {
+    "startPairing": {
+      "name": "Start Pairing",
+      "@type": "StartPairingAction"
+    },
     "addThing": {
       "title": "Add Device",
       "@type": "AddThingAction",
+      "input": {
+        "type": "object"
+      }
     },
     "removeThing": {
       "title": "Remove Device",
@@ -82,7 +89,7 @@ Example Thing Description for a gateway:
 
 ### Features
 * The Thing Description has a `@type` of `Gateway` (defined here using a reference to Mozilla's own schema repository, but this could be defined elsewhere)
-* The Thing Description has an `AddThingAction` and `RemoveThingAction` action to add and remove devices respectively (in the case of WebThings Gateway the `AddThingAction` starts a pairing process to discover local devices using wireless protocols like Zigee and Z-Wave as well as discovering devices on the local network via DNS-SD broadcasts)
+* The Thing Description has an `AddThingAction` and `RemoveThingAction` action to add and remove web things respectively. In the case of gateways such as WebThings Gateway, a `StartPairingAction` is also available to initiate a pairing process to discover local devices using wireless protocols like Zigee and Z-Wave as well as discovering devices on the local network via DNS-SD broadcasts.
 * The Thing Description has a `ThingAddedEvent`, `ThingRemovedEvent` and `ThingUpdatedEvent` to notify clients when devices are added and removed from the gateway or their Thing Descriptions are updated
 * The Thing Description includes links to Thing Descriptions of the devices it manages, each with a link relation of type `item` (this seemed like the most obvious existing link relation type, but a new type could be defined)
 
