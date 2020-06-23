@@ -40,21 +40,21 @@ Example Thing Description for a gateway:
     }
   },
   "events": {
-    "deviceAdded": {
+    "thingAdded": {
       "title": "Device Added",
       "@type": "ThingAddedEvent",
       "data": {
         "type": "string"    
       }
     },
-    "deviceRemoved": {
+    "thingRemoved": {
       "title": "Device Added",
       "@type": "ThingRemovedEvent",
       "data": {
         "type": "string"    
       }
     },
-    "deviceUpdated": {
+    "thingUpdated": {
       "title": "Device Updated",
       "@type": "ThingUpdatedEvent",
       "data": {
