@@ -28,7 +28,7 @@ Example Thing Description for a gateway:
       "title": "Add Device",
       "@type": "AddThingAction",
       "input": {
-        "type": "object"
+        "type": "string"
       }
     },
     "removeThing": {
