@@ -85,7 +85,7 @@ Example Thing Description for a gateway:
 
 ### Features
 * The Thing Description has a `@type` of `Directory` (defined here using a reference to Mozilla's own schema repository, but this could be defined elsewhere)
-* The Thing Description has an `AddThingAction` and `RemoveThingAction` to add and remove web things respectively. In the case of gateways such as WebThings Gateway, a `StartPairingAction` is also available to initiate a pairing process to discover local devices using wireless protocols like Zigee and Z-Wave as well as discovering devices on the local network via DNS-SD broadcasts.
+* The Thing Description has an `AddThingAction` and `RemoveThingAction` to add and remove web things respectively. In the case of gateways such as WebThings Gateway, a `StartPairingAction` is also available to initiate a pairing process to discover local devices using wireless protocols like Zigbee and Z-Wave as well as discovering devices on the local network via DNS-SD broadcasts.
 * The Thing Description has a `ThingAddedEvent`, `ThingRemovedEvent` and `ThingUpdatedEvent` to notify clients when devices are added and removed from the gateway or their Thing Descriptions are updated
 * The Thing Description includes links to Thing Descriptions of the devices it manages, each with a link relation of type `item` (this seemed like the most obvious existing link relation type, but a new type could be defined)
 
@@ -97,4 +97,5 @@ Example Thing Description for a gateway:
 ## Open issues
 1. How should a client initially authenticate with a gateway in order to be authorised to get its list of Thing Descriptions? The Thing Description for the gateway can provide security metadata, but a client can only access this metadata if it is already authorised to fetch the Thing Description, rendering it useless. Could the gateway/directory initially serve a stripped-down Thing Description which only contains security metadata?
 2. How should a client search the gateway for a list of devices meeting certain criteria (e.g. get a list of devices for a given device type)? The interaction affordances of the Thing Description could be extended to support such use cases.
-3.  Due to the complexity of different smart home protocols and pairing mechanisms the WebThings Gateway has a separate concept of pairing/unpairing devices with the gateway at the protocol level and adding/removing devices from the gateway's database. In practice it may be necessary to represent these actions separately in the Thing Description.
+3. Due to the complexity of different smart home protocols and pairing mechanisms the WebThings Gateway has a separate concept of pairing/unpairing devices with the gateway at the protocol level and adding/removing devices from the gateway's database. In practice it may be necessary to represent these actions separately in the Thing Description.
+    * An example is the aforementioned `StartPairingAction`.
