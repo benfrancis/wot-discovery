@@ -31,7 +31,9 @@ Example Thing Description for a directory:
         "type": "string"
       },
       "forms": [{
-        "href": "/properties/things"
+        "href": "/things",
+        "op": "readproperty",
+        "htv:methodName": "GET"
       }]
     }
   },
@@ -43,17 +45,18 @@ Example Thing Description for a directory:
         "type": "string"
       },
       "forms": [{
-        "href": "/actions/add_thing"
+        "href": "/things",
+        "op": "invokeaction",
+        "htv:methodName": "POST"
       }]
     },
     "removeThing": {
       "title": "Remove Device",
       "@type": "RemoveThingAction",
-      "input": {
-        "type": "string"
-      },
       "forms": [{
-        "href": "/actions/remove_thing"
+        "op": "invokeaction",
+        "href": "/things/{id}",
+        "htv:methodName": "DELETE"
       }]
     }
   },
