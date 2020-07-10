@@ -12,31 +12,49 @@ This idea came out of the WebThings Gateway project which currently uses a diffe
 ## Background
 Mozilla's [WebThings Gateway](https://iot.mozilla.org/gateway/) is an open source smart home hub which acts as a Web of Things gateway and currently exposes a directory of things via a [`Things`](https://iot.mozilla.org/wot/#things-resource) endpoint of its REST API, which resolves to a list of Thing Descriptions of the devices the gateway manages.
 
-Over time the team [realised](https://github.com/mozilla-iot/schemas/issues/35) that a potential better solution would be to define a [capability schema](https://iot.mozilla.org/schemas/) for WoT gateways such that a gateway could have its own Thing Description. This Thing Decription could then describe properties, actions and events for the gateway device itself, and provide a list of links to Thing Descriptions for the devices it manages.
+Over time the team [realised](https://github.com/mozilla-iot/schemas/issues/35) that a potential better solution would be to define a [capability schema](https://iot.mozilla.org/schemas/) for WoT gateways such that a gateway could have its own Thing Description. This Thing Decription could then describe properties, actions and events for the gateway device itself, and provide a list of links to Thing Descriptions for the devices it manages as a property.
 
 ## Proposal
 ### Example
 
-Example Thing Description for a gateway:
+Example Thing Description for a directory:
 ```json
 {
-  "title": "WebThings Gateway",
+  "title": "My Directory",
   "@context": "https://iot.mozilla.org/schemas/",
   "@type": "Directory",
+  "properties": {
+    "things": {
+      "type": "array",
+      "@type": "ThingList",
+      "items": {
+        "type": "string"
+      },
+      "forms": [{
+        "href": "/properties/things"
+      }]
+    }
+  },
   "actions": {
     "addThing": {
       "title": "Add Device",
       "@type": "AddThingAction",
       "input": {
         "type": "string"
-      }
+      },
+      "forms": [{
+        "href": "/actions/add_thing"
+      }]
     },
     "removeThing": {
       "title": "Remove Device",
       "@type": "RemoveThingAction",
       "input": {
         "type": "string"
-      }
+      },
+      "forms": [{
+        "href": "/actions/remove_thing"
+      }]
     }
   },
   "events": {
@@ -45,49 +63,41 @@ Example Thing Description for a gateway:
       "@type": "ThingAddedEvent",
       "data": {
         "type": "string"    
-      }
+      },
+      "forms": [{
+        "href": "/events/thing_added"
+      }]
     },
     "thingRemoved": {
       "title": "Device Removed",
       "@type": "ThingRemovedEvent",
       "data": {
         "type": "string"    
-      }
+      },
+      "forms": [{
+        "href": "/events/thing_removed"
+      }]
     },
     "thingUpdated": {
       "title": "Device Updated",
       "@type": "ThingUpdatedEvent",
       "data": {
         "type": "string"    
-      }
+      },
+      "forms": [{
+        "href": "/events/thing_updated"
+      }]
     }
   },
-  "security": { ... },
-  "links": [
-    {
-      "rel": "item",
-      "href": "/things/thing1",
-      "type": "application/td+json"
-    },
-    {
-      "rel": "item",
-      "href": "/things/thing2",
-      "type": "application/td+json"
-    },
-    {
-      "rel": "item",
-      "href": "/things/thing3",
-      "type": "application/td+json"
-    }
-  ]
+  "security": { ... }
 }
 ```
 
 ### Features
 * The Thing Description has a `@type` of `Directory` (defined here using a reference to Mozilla's own schema repository, but this could be defined elsewhere)
+* The Thing Description has a `ThingList` property which returns a list of links to the Thing Descriptions of web things in the directory
 * The Thing Description has an `AddThingAction` and `RemoveThingAction` to add and remove web things respectively. In the case of gateways such as WebThings Gateway, a `StartPairingAction` is also available to initiate a pairing process to discover local devices using wireless protocols like Zigbee and Z-Wave as well as discovering devices on the local network via DNS-SD broadcasts.
 * The Thing Description has a `ThingAddedEvent`, `ThingRemovedEvent` and `ThingUpdatedEvent` to notify clients when devices are added and removed from the gateway or their Thing Descriptions are updated
-* The Thing Description includes links to Thing Descriptions of the devices it manages, each with a link relation of type `item` (this seemed like the most obvious existing link relation type, but a new type could be defined)
 
 ### Usage
 1. In the [introduction phase](https://github.com/w3c/wot-discovery/blob/master/proposals/directory.md#introduction-phase-first-contact-mechanism) the top level Thing Description of the gateway/directory can be discovered by a client using an external mechanism like mDNS/DNS-SD broadcasts, Bluetooth beacon, etc.
